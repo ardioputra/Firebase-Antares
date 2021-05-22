@@ -16,6 +16,7 @@
 #define ldr A0 //inisialisasi ldr sebagai A0(pin dari ldr)
 int statusldr = 0; //inisialisasi variabel pembacaan ldr
 int statuspir = 0; //inisialisasi variabel pembacaan pir
+String statusled;
 
 
 void setup() {
@@ -48,23 +49,20 @@ void loop() {
   if(statuspir == HIGH && statusldr < 200){ //cek kondisi jika ada gerakan(statuspir == HIGH) dan cahaya kurang(statusldr < 200)
     Serial.printf("Lampu Menyala\n"); //output "Lampu Menyala" pada serial
     digitalWrite(relay, LOW); //set relay low(lampu menyala)
-    Firebase.setString("LED","HIDUP");
-    if (Firebase.failed()) {
-      Serial.print("setting /number failed:");
-      Serial.println(Firebase.error());  
-      return;
-      }
+    statusled = "HIDUP";
     delay(300000); //delay 300000 ms / 300 second / 5 minute
   }
   else{ //jika kondisi diatas tidak terpenuhi
     Serial.printf("Status PIR : %d\n",statuspir); //output nilai pir pada serial
     Serial.printf("Status LDR : %d Lux\n",statusldr); //output nilai ldr pada serial
-    Firebase.setString("LED","MATI");
-    if (Firebase.failed()) {
-      Serial.print("setting /number failed:");
-      Serial.println(Firebase.error());  
-      return;
-      }
+    statusled = "MATI";
+  }
+
+  Firebase.setString("LED",statusled);
+  if (Firebase.failed()) {
+    Serial.print("setting /number failed:");
+    Serial.println(Firebase.error());  
+    return;
   }
   delay(1000); //memberi jeda antar pembacaan sensor
 }
