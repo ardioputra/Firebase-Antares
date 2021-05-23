@@ -26,18 +26,18 @@ void setup()
   Serial.print("Connected to ");
   Serial.println(WIFI_SSID);
   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);                  // connect to firebase
-  Firebase.setString("LED_STATUS", "OFF");                       //send initial string of led status
+  Firebase.setString("SAKLAR", "OFF");                       //send initial string of led status
 }
  
 void loop() 
 {
-  fireStatus = Firebase.getString("LED_STATUS");                                      // get ld status input from firebase
-  if (fireStatus == "ON") 
+  fireStatus = Firebase.getString("SAKLAR");                                      // get ld status input from firebase
+  if (fireStatus == "ON" || fireStatus == "on" || fireStatus == "On") 
   {                                                          // compare the input of led status received from firebase
     Serial.println("Led Turned ON");                                                        
     digitalWrite(led, HIGH);                                                         // make external led ON
   } 
-  else if (fireStatus == "OFF") 
+  else if (fireStatus == "OFF" || fireStatus == "off" || fireStatus == "Off") 
   {                                                  // compare the input of led status received from firebase
     Serial.println("Led Turned OFF");
     digitalWrite(led, LOW);                                                         // make external led OFF
