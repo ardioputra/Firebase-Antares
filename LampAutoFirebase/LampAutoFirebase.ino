@@ -16,6 +16,7 @@
 #define ldr A0 //inisialisasi ldr sebagai A0(pin dari ldr)
 int statusldr = 0; //inisialisasi variabel pembacaan ldr
 int statuspir = 0; //inisialisasi variabel pembacaan pir
+String statusled;
 
 
 void setup() {
@@ -48,6 +49,7 @@ void loop() {
   if(statuspir == HIGH && statusldr < 200){ //cek kondisi jika ada gerakan(statuspir == HIGH) dan cahaya kurang(statusldr < 200)
     Serial.printf("Lampu Menyala\n"); //output "Lampu Menyala" pada serial
     digitalWrite(relay, LOW); //set relay low(lampu menyala)
+<<<<<<< HEAD
     Firebase.setFloat("/TestSendData/LDR/", statusldr);
     Firebase.setFloat("/TestSendData/PIR/", statuspir);
     Firebase.setString("/TestSendData/LED/", "HIDUP");
@@ -56,11 +58,15 @@ void loop() {
       Serial.println(Firebase.error());  
       return;
       }
+=======
+    statusled = "HIDUP";
+>>>>>>> 9f33b444f1edc2be354fa22e17900fd46f7cec54
     delay(300000); //delay 300000 ms / 300 second / 5 minute
   }
   else{ //jika kondisi diatas tidak terpenuhi
     Serial.printf("Status PIR : %d\n",statuspir); //output nilai pir pada serial
     Serial.printf("Status LDR : %d Lux\n",statusldr); //output nilai ldr pada serial
+<<<<<<< HEAD
     Firebase.setFloat("/TestSendData/LDR/", statusldr);
     Firebase.setFloat("/TestSendData/PIR/", statuspir);
     Firebase.setString("/TestSendData/LED/", "MATI");
@@ -69,6 +75,16 @@ void loop() {
       Serial.println(Firebase.error());  
       return;
       }
+=======
+    statusled = "MATI";
+  }
+
+  Firebase.setString("LED",statusled);
+  if (Firebase.failed()) {
+    Serial.print("setting /number failed:");
+    Serial.println(Firebase.error());  
+    return;
+>>>>>>> 9f33b444f1edc2be354fa22e17900fd46f7cec54
   }
   delay(1000); //memberi jeda antar pembacaan sensor
 }
