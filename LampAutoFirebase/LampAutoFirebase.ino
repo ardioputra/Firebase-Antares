@@ -48,8 +48,9 @@ void loop() {
   if(statuspir == HIGH && statusldr < 200){ //cek kondisi jika ada gerakan(statuspir == HIGH) dan cahaya kurang(statusldr < 200)
     Serial.printf("Lampu Menyala\n"); //output "Lampu Menyala" pada serial
     digitalWrite(relay, LOW); //set relay low(lampu menyala)
-    String statusldr;  
-    Firebase.pushString("/LED", statusldr);
+    Firebase.setFloat("/TestSendData/LDR/", statusldr);
+    Firebase.setFloat("/TestSendData/PIR/", statuspir);
+    Firebase.setString("/TestSendData/LED/", "HIDUP");
     if (Firebase.failed()) {
       Serial.print("setting /number failed:");
       Serial.println(Firebase.error());  
@@ -60,7 +61,9 @@ void loop() {
   else{ //jika kondisi diatas tidak terpenuhi
     Serial.printf("Status PIR : %d\n",statuspir); //output nilai pir pada serial
     Serial.printf("Status LDR : %d Lux\n",statusldr); //output nilai ldr pada serial
-    Firebase.pushString("/LED","MATI");
+    Firebase.setFloat("/TestSendData/LDR/", statusldr);
+    Firebase.setFloat("/TestSendData/PIR/", statuspir);
+    Firebase.setString("/TestSendData/LED/", "MATI");
     if (Firebase.failed()) {
       Serial.print("setting /number failed:");
       Serial.println(Firebase.error());  
