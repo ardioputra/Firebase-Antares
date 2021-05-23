@@ -1,10 +1,10 @@
 #include <AntaresESP8266MQTT.h>
 
-#define ACCESSKEY "your-access-key" //sesuai antares
-#define WIFISSID "your-wifi-ssid" //SSID WiFi
-#define PASSWORD "your-wifi-password" //Password WiFi 
-#define projectName "AutomaticLampKel7" //sesuai antares
-#define deviceName "AutomatiLamp" //sesuai antares
+#define ACCESSKEY "7dc57000dea4a3d5:83e96f357b69d921" //sesuai antares
+#define WIFISSID "1728" //SSID WiFi
+#define PASSWORD "duadelapann" //Password WiFi 
+#define projectName "AutomaticLamp" //sesuai antares
+#define deviceName "AutomaticLamp" //sesuai antares
 
 #define relay 4 //inisialisasi relay sebagai 4(pin relay di D2)
 #define pir 5 //inisialisasi pir sebagai 5(pin pir di D1)

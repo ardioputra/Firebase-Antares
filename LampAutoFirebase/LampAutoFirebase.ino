@@ -6,10 +6,10 @@
 #include <FirebaseObject.h>
 #include <ESP8266WiFi.h>
 
-#define FIREBASE_HOST "fir-autolamp-default-rtdb.asia-southeast1.firebasedatabase.app"
-#define FIREBASE_AUTH "VE2jIvoD26ItKYuY4rXx4Tkj5H0c1Ae2YWnfrAP0"
-#define WIFISSID "your-wifi-ssid" //SSID WiFi
-#define PASSWORD "your-wifi-password" //Password WiFi 
+#define FIREBASE_HOST "automaticlamp-76a3e-default-rtdb.asia-southeast1.firebasedatabase.app"
+#define FIREBASE_AUTH "x8MkihQn0cz0Fc8MKESGkj7RYILpwtA1TT8IGkfK"
+#define WIFISSID "ZTE" //SSID WiFi
+#define PASSWORD "GERIYASELARAS" //Password WiFi 
 
 #define relay 4 //inisialisasi relay sebagai 4(pin relay di D2)
 #define pir 5 //inisialisasi pir sebagai 5(pin pir di D1)
@@ -48,7 +48,8 @@ void loop() {
   if(statuspir == HIGH && statusldr < 200){ //cek kondisi jika ada gerakan(statuspir == HIGH) dan cahaya kurang(statusldr < 200)
     Serial.printf("Lampu Menyala\n"); //output "Lampu Menyala" pada serial
     digitalWrite(relay, LOW); //set relay low(lampu menyala)
-    Firebase.setString("LED","HIDUP");
+    String statusldr;  
+    Firebase.pushString("/LED", statusldr);
     if (Firebase.failed()) {
       Serial.print("setting /number failed:");
       Serial.println(Firebase.error());  
@@ -59,7 +60,7 @@ void loop() {
   else{ //jika kondisi diatas tidak terpenuhi
     Serial.printf("Status PIR : %d\n",statuspir); //output nilai pir pada serial
     Serial.printf("Status LDR : %d Lux\n",statusldr); //output nilai ldr pada serial
-    Firebase.setString("LED","MATI");
+    Firebase.pushString("/LED","MATI");
     if (Firebase.failed()) {
       Serial.print("setting /number failed:");
       Serial.println(Firebase.error());  
